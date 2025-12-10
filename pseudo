@@ -1,0 +1,81 @@
+Program TokoRotiCoffee
+
+    namaRoti[10], hargaRoti[10]
+    namaCoffee[10], hargaCoffee[10]
+    pilihan[50], jumlah[50], kategori[50]
+    menu, pilih, jml : integer
+    totalBelanja, totalRoti, totalCoffee, diskon : integer
+    banyak : integer
+    selesai : boolean
+    subtotal, i : integer
+
+Algoritma
+    banyak = 0
+    selesai = false
+
+    WHILE selesai = false DO
+        OUTPUT "1. Roti"
+        OUTPUT "2. Coffee"
+        OUTPUT "3. Bayar"
+        INPUT menu
+
+        IF menu = 1 OR menu = 2 THEN
+            TAMPILKAN menu sesuai pilihan
+            INPUT pilih
+
+            WHILE pilih != 0 DO
+                INPUT jml
+                pilihan[banyak] = pilih - 1
+                jumlah[banyak] = jml
+                kategori[banyak] = menu
+                banyak = banyak + 1
+                INPUT pilih
+            END WHILE
+        END IF
+
+        IF menu = 3 THEN
+            IF banyak = 0 THEN
+                OUTPUT "Belum ada pesanan"
+            ELSE
+                totalBelanja = 0
+                totalRoti = 0
+                totalCoffee = 0
+                diskon = 0
+
+                FOR i = 0 TO banyak-1 DO
+                    IF kategori[i] = 1 THEN
+                        subtotal = hargaRoti[pilihan[i]] * jumlah[i]
+                        OUTPUT namaRoti[pilihan[i]], jumlah[i], subtotal
+                        totalRoti = totalRoti + jumlah[i]
+                    ELSE
+                        subtotal = hargaCoffee[pilihan[i]] * jumlah[i]
+                        OUTPUT namaCoffee[pilihan[i]], jumlah[i], subtotal
+                        totalCoffee = totalCoffee + jumlah[i]
+                    END IF
+
+                    totalBelanja = totalBelanja + subtotal
+                END FOR
+
+                IF totalBelanja > 250000 THEN
+                    diskon = totalBelanja / 10
+                END IF
+
+                OUTPUT totalBelanja
+                OUTPUT diskon
+                OUTPUT totalBelanja - diskon
+
+                IF totalRoti MOD 10 = 0 AND totalRoti != 0 THEN
+                    OUTPUT "Bonus Roti"
+                END IF
+
+                IF totalCoffee MOD 10 = 0 AND totalCoffee != 0 THEN
+                    OUTPUT "Bonus Coffee"
+                END IF
+
+                OUTPUT "Terima kasih"
+                selesai = true
+            END IF
+        END IF
+    END WHILE
+
+End Program
